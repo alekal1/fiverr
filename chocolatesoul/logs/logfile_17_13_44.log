@@ -1,0 +1,4 @@
+INFO:root:INFO:root:2020-04-15 16:40:09.721790-0300 0x552758   Default     0xd3a9a1             68     0    OTACrashCopier: (CFNetwork) Task <F73C057C-06BC-4342-8BB9-E0EC2F8C3CD3>.<4285> finished with error [-999] Error Domain=NSURLErrorDomain Code=-999 UserInfo={NSErrorFailingURLStringKey=<private>, NSErrorFailingURLKey=<private>, _NSURLErrorRelatedURLSessionTaskErrorKey=<private>, _NSURLErrorFailingURLSessionTaskErrorKey=<private>, NSLocalizedDescription=<private>}
+
+INFO:root:INFO:root:2020-04-15 16:40:09.760346-0300 0x552758   Default     0xd3a9a1             68     0    OTACrashCopier: (CFNetwork) Task <4BF46FD0-7398-441A-A631-CB4EACC230F9>.<4286> finished with error [-999] Error Domain=NSURLErrorDomain Code=-999 UserInfo={NSErrorFailingURLStringKey=<private>, NSErrorFailingURLKey=<private>, _NSURLErrorRelatedURLSessionTaskErrorKey=<private>, _NSURLErrorFailingURLSessionTaskErrorKey=<private>, NSLocalizedDescription=<private>}
+

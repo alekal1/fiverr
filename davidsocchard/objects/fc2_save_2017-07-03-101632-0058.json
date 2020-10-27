@@ -1,0 +1,250 @@
+{
+	"json_schema_version": 1,
+	"file_name": "fc2_save_2017-07-03-101632-0058.png",
+	"image_name": "fc2_save_2017-07-03-101632-0058.png",
+	"annotation_type": "2d_bbox",
+	"image_size": [
+		1920,
+		1200
+	],
+	"date": null,
+	"day-night": null,
+	"weather": null,
+	"road_type": null,
+	"road_shape": null,
+	"coordinate": [
+		
+	],
+	"num_of_object": 12,
+	"objects": [
+		{
+			"class_name": "pedestrian",
+			"instance_id": 18,
+			"annotation type": "bounding box",
+			"attribute": {
+				"occlusion": 0,
+				"truncated": 0
+			},
+			"data": [
+				[
+					94.5,
+					670.5
+				],
+				[
+					129,
+					750.5
+				]
+			]
+		},
+		{
+			"class_name": "speed limit sign",
+			"instance_id": 19,
+			"annotation type": "bounding box",
+			"attribute": {
+				"occlusion": 0,
+				"truncated": 0,
+				"speed value": "25"
+			},
+			"data": [
+				[
+					178,
+					698.5
+				],
+				[
+					215.5,
+					740
+				]
+			]
+		},
+		{
+			"class_name": "pedestrian",
+			"instance_id": 20,
+			"annotation type": "bounding box",
+			"attribute": {
+				"occlusion": 1,
+				"truncated": 0
+			},
+			"data": [
+				[
+					797.5,
+					657
+				],
+				[
+					822.5,
+					702.25
+				]
+			]
+		},
+		{
+			"class_name": "pedestrian",
+			"instance_id": 21,
+			"annotation type": "bounding box",
+			"attribute": {
+				"occlusion": 1,
+				"truncated": 0
+			},
+			"data": [
+				[
+					690.5,
+					665
+				],
+				[
+					715.75,
+					704.5
+				]
+			]
+		},
+		{
+			"class_name": "truck",
+			"instance_id": 22,
+			"annotation type": "bounding box",
+			"attribute": {
+				"occlusion": 0,
+				"truncated": 0
+			},
+			"data": [
+				[
+					879.25,
+					655.25
+				],
+				[
+					909.75,
+					691.25
+				]
+			]
+		},
+		{
+			"class_name": "truck",
+			"instance_id": 23,
+			"annotation type": "bounding box",
+			"attribute": {
+				"occlusion": 1,
+				"truncated": 0
+			},
+			"data": [
+				[
+					771.25,
+					646.5
+				],
+				[
+					806,
+					693.25
+				]
+			]
+		},
+		{
+			"class_name": "pedestrian",
+			"instance_id": 24,
+			"annotation type": "bounding box",
+			"attribute": {
+				"occlusion": 0,
+				"truncated": 0
+			},
+			"data": [
+				[
+					962.5,
+					656.75
+				],
+				[
+					991.5,
+					703.25
+				]
+			]
+		},
+		{
+			"class_name": "pedestrian",
+			"instance_id": 25,
+			"annotation type": "bounding box",
+			"attribute": {
+				"occlusion": 1,
+				"truncated": 0
+			},
+			"data": [
+				[
+					292,
+					662.5
+				],
+				[
+					336.5,
+					740
+				]
+			]
+		},
+		{
+			"class_name": "pedestrian",
+			"instance_id": 26,
+			"annotation type": "bounding box",
+			"attribute": {
+				"occlusion": 0,
+				"truncated": 0
+			},
+			"data": [
+				[
+					1537,
+					642
+				],
+				[
+					1613,
+					787.5
+				]
+			]
+		},
+		{
+			"class_name": "car",
+			"instance_id": 31,
+			"annotation type": "bounding box",
+			"attribute": {
+				"occlusion": 1,
+				"truncated": 0
+			},
+			"data": [
+				[
+					575,
+					660
+				],
+				[
+					637.5,
+					715
+				]
+			]
+		},
+		{
+			"class_name": "truck",
+			"instance_id": 32,
+			"annotation type": "bounding box",
+			"attribute": {
+				"occlusion": 1,
+				"truncated": 0
+			},
+			"data": [
+				[
+					501.5,
+					642.5
+				],
+				[
+					586,
+					726
+				]
+			]
+		},
+		{
+			"class_name": "truck",
+			"instance_id": 44,
+			"annotation type": "bounding box",
+			"attribute": {
+				"occlusion": 1,
+				"truncated": 1
+			},
+			"data": [
+				[
+					0,
+					587
+				],
+				[
+					75,
+					796
+				]
+			]
+		}
+	]
+}

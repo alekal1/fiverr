@@ -1,0 +1,1026 @@
+-- $Header_Start$
+-- **********************************************************************
+--    SECURITY
+-- CLASSIFICATION : Not Protectively Marked
+--
+-- FILENAME    : $RCSfile$ %M%
+--
+-- TITLE       : Instructors Operating Station
+--
+-- REVISION    : $Revision$ %I%
+-- BASELINE    : Unknown
+-- PACKAGE     : Unknown
+--
+-- CSCI        : DiGIT
+-- CSC         :
+--
+-- APPL. LEVEL : 5
+--
+-- AUTHORITY   : S. Wickramasekera
+--
+-- COPYRIGHT   : (c)  L-3 Link Simulation & Training UK Ltd  2020
+--
+-- **********************************************************************
+--
+-- DESCRIPTION : 
+--
+--
+-- **********************************************************************
+--
+-- REFERENCES  :
+--
+-- **********************************************************************
+--
+-- MODIFICATION RECORD
+--
+--  DATE         ENGINEER         REASON FOR CHANGE
+--  ----         --------         -----------------
+--
+-- $Record$
+--
+-- **********************************************************************
+--
+-- $Ids$
+--
+-- **********************************************************************
+-- $Header_End$
+
+Lesson( "EBT Module 4 - Day 1 / IH Rev. 0.95 / Last Modified 17.10.2020", TEXT, MANUAL, 180, 180, 0, 80000, LESSON_ALT_FORMAT,
+        "d\nBx60T\nx80O", "BT\nS10D40C" )
+{
+   TextStyle( PROFILE_BUTTON, NORMAL_FONT, WHITE, 0x0 );
+   TextStyle( PROFILE_TITLE, NORMAL_FONT, WHITE, 0x0 );
+   TextStyle( PROFILE_DESCRIPTION, NORMAL_FONT, WHITE, 0x0 );
+   TextStyle( PROFILE_COMMENT, NORMAL_FONT, WHITE, 0x0 );
+   TextStyle( PROFILE_OPTION, NORMAL_FONT, WHITE, 0x0 );
+   TextStyle( LIST_BUTTON, NORMAL_FONT, WHITE, 0x0 );
+   TextStyle( LIST_TITLE, NORMAL_FONT, GREEN, 0x0 );
+   TextStyle( LIST_DESCRIPTION, NORMAL_FONT, WHITE, 0x0 );
+   TextStyle( LIST_COMMENT, NORMAL_FONT, cMap_ILS, 0x0 );
+   TextStyle( LIST_OPTION, NORMAL_FONT, WHITE, 0x0 );
+   GridSettings( FALSE, FALSE, 60.00, 1000.00 );
+   PrintOpts( 255, 63, 2047, 31 );
+   ListViewPageSetup( 0, 0.00, 0.00, 0.00, 0.00, 0 );
+   ProfileViewPageSetup( 1, 0.00, 0.00, 0.00, 0.00, 0 );
+   TaskPageSetup( 0, 0.00, 0.00, 0.00, 0.00, 0 );
+   AttrPageSetup( 0, 0.00, 0.00, 0.00, 0.00, 0 );
+
+   Task( 6, 4000, 0x1, MANUAL, "Sim. Reset", "Visual On\nSystem Reset\nMalfunction Reset\nEnvironment Reset\nWeather Scenario Reset", "", "", 0)
+   {
+      Action( "Weather/Visual - Visual/Runway Conditions: Visual On", [
+         Visual.Displays_On := TRUE;
+         wait(1000) ] );
+      Action( "Reset: Major - Environment Reset", [
+         Reset.Environment := not Reset.Environment;
+         wait(4000) ] );
+      Action( "Reset: Major - Malfunctions Reset", [
+         reset("Mm")] );
+      Action( "Reset: Major - Weather Scenario Reset", [
+         MultiWeather.Master_Reset := not MultiWeather.Master_Reset] );
+      Action( "Reset: Major - System Reset", [
+         Aircraft.SystemReset := not Aircraft.SystemReset;
+         wait(5000) ] );
+   }
+
+   Task( 7.5, 4500, 0x2, MANUAL, "", "", "******************** EVP 1 ********************", "", 0)
+   {
+   }
+
+   Task( 9, 5000, 0x3, MANUAL, "HOLD 18  - GW WX\n", "ZFW/ZFWCG: 180.0/30.0\nFOB: 18t\n\nEDDF   250/15   3.500m VCTS  \nBKN006CB   12/9   Q1008\nTEMPO TSRA ", "", "", 0)
+   {
+      Action( "Initial Conditions: Aircraft Set", [
+         Aircraft.ZeroFuelWeight := 180 tonne;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.ZeroFuelWeight)) endhang;
+         wait(100);
+         Aircraft.CG_ZeroFuelWeight := 30.0 percent_mac;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.CG_ZeroFuelWeight)) endhang;
+         wait(100);
+         Fuel.TotalFuelQty_Kg := 18 tonne;
+         wait(400);
+         hang while(symbol_read_only(&Fuel.TotalFuelQty_Kg)) endhang] );
+      Action( "Weather/Visual - Basic: Set Surface Wind Direction", [
+         Weather.WindDirAt30Ft := 250 degree;
+         wait(100);
+         if Weather.WindDirAt30Ft.MwxStatus = 1 then
+            Weather.WindDirAt30Ft.MwxStatus := 2
+         endif;
+         wait(1500) ] );
+      Action( "Weather/Visual - Basic: Set Surface Wind Speed", [
+         Weather.WindSpdAt30Ft := 15 knot;
+         wait(100);
+         if Weather.WindSpdAt30Ft.MwxStatus = 1 then
+            Weather.WindSpdAt30Ft.MwxStatus := 2
+         endif;
+         wait(1500) ] );
+      Action( "Weather/Visual - Basic: Set Visibility", [
+         Weather.Visibility := 3.5 kilometre;
+         wait(100);
+         if Weather.Visibility.MwxStatus = 1 then
+            Weather.Visibility.MwxStatus := 2
+         endif;
+         wait(400) ] );
+      Action( "Weather/Visual - Cloud: Lower Cloud Layer - Type", [
+         Weather.Cloud_Type_Lower := 2;
+         wait(700) ] );
+      Action( "Weather/Visual - Cloud: Lower Cloud Layer", [
+         Weather.LowerCloud1BottomAltitude := 600 foot;
+         wait(2000);
+         Weather.LowerCloud1TopAltitude := 5000 foot;
+         wait(1000);
+         Weather.Cloud1ScudEffectLower := FALSE;
+         wait(1000) ] );
+      Action( "Weather/Visual - Basic: Set Field Temp", [
+         Weather.FieldLevelTemp := 12 celsius;
+         wait(100);
+         hang while ( symbol_read_only(&Weather.FieldLevelTemp) ) endhang;
+         if Weather.FieldLevelTemp.MwxStatus = 1 then
+            Weather.FieldLevelTemp.MwxStatus := 2
+         endif;
+         wait(400) ] );
+      Action( "ATIS: Dew Point", [
+         Atis.DewPoint := 9 celsius;
+         wait(100) ] );
+      Action( "Weather/Visual - Basic: Set QNH", [
+         Atmos.QNH := 1008 hectopascal;
+         wait(100);
+         hang while ( symbol_read_only(&Atmos.QNH) ) endhang;
+         if Atmos.QNH.MwxStatus = 1 then
+            Atmos.QNH.MwxStatus := 2
+         endif;
+         wait(400) ] );
+   }
+
+   Task( 15, 7000, 0x4, MANUAL, "HOLD 18 - REPOS", "PERF: 140/140/145 FLX64 CONF1+F\nTOCG 30.4 StopMargin >900 EOACC\n1900 FRAX3", "", "", 0)
+   {
+      Action( "Reposition: On Ground Reposition", [
+         RadioAid.RepositionAirportIcao := "EDDF";
+         wait(100);
+         RadioAid.RepositionAirportRwy := "18";
+         wait(100);
+         Aircraft.ReposOnGnd := 9;
+         wait(500);
+         if Aircraft.ReposOnGnd = 7 or Aircraft.ReposOnGnd = 8 then
+            wait(200);
+            Reset.All_Temperature_Resets := TRUE
+         endif;
+         wait(5000);
+         hang while( Maint.Environment.ReposStatus > 0 ) endhang ] );
+   }
+
+   Task( 18, 8000, 0x5, MANUAL, "APU Q-START", "all doors close sequence", "", "", 0)
+   {
+      Action( "Aircraft Services: APU Start", [
+         Apu.Quickstart := TRUE] );
+      Action( "Doors & Slides: Doors/Slides Sequence", [
+         Door.OpenAndCloseSequence := FALSE] );
+   }
+
+   Task( 24, 10000, 0x6, MANUAL, "ENG Q-START", "", "", "", 0)
+   {
+      Action( "Aircraft Services: Engine Start", [
+         Eng.Quickstart := TRUE] );
+   }
+
+   Task( 36, 14000, 0x7, MANUAL, "EXT ELEC OFF", "", "", "", 0)
+   {
+      Action( "Aircraft Services: External Power 1", [
+        Elec.ExtPwrConnect.1 := FALSE] );
+      Action( "Aircraft Services: External Power 2", [
+        Elec.ExtPwrConnect.2 := FALSE] );
+   }
+
+   Task( 39, 15000, 0x8, MANUAL, "*PRED WS", "Option 1", "ohne Funktion, L3 muss checken", "", 0)
+   {
+      Action( "Weather Scenarios - Atmosphere: Activate Microburst", [
+         MultiWeather.PreviewMicroburstLocation(liLPMwx_Region) := 2;
+         wait(200) ] );
+   }
+
+   Task( 40.5, 15500, 0x9, MANUAL, "CLEAR PWS", "Option 1", "ohne Funktion, L3 muss checken", "", 0)
+   {
+      Action( "Weather Scenarios - Atmosphere: Clear Microburst", [
+         MultiWeather.PreviewMicroburstLocation(liLPMwx_Region) := 0;
+         wait(200) ] );
+   }
+
+   Task( 42, 16000, 0xa, MANUAL, "*WS ON RWY", "Option 3", "", "", 0)
+   {
+      Action( "Weather/Visual - Windshears: Activate Windshear", [
+         liWindshearProfile := 11;
+         wait(200);
+         if liWindshearProfile < 11 then
+            Weather.WindshearProfileNumber := liWindshearProfile;
+            wait(100)
+         elsif liWindshearProfile = 11 then
+            Weather.WindshearProfileNumber := 34;
+            Flight.WindshearTrigger.Takeoff_Vr := TRUE;
+            wait(100)
+         elsif liWindshearProfile = 12 then
+            Weather.WindshearProfileNumber := 34;
+            Flight.WindshearTrigger.Takeoff_Pitch := TRUE;
+            wait(100)
+         elsif liWindshearProfile = 13 then
+            Weather.WindshearProfileNumber := 34;
+            Flight.WindshearTrigger.Appr_Desc := TRUE;
+            wait(100)
+         elsif liWindshearProfile = 14 then
+            Weather.WindshearProfileNumber := 35;
+            wait(100)
+         elsif liWindshearProfile = 15 then
+            Weather.WindshearProfileNumber := 36;
+            wait(100)
+         elsif liWindshearProfile = 16 then
+            Weather.WindshearProfileNumber := 37;
+            wait(100)
+         endif;
+         wait(1000) ] );
+   }
+
+   Task( 45, 17000, 0xb, MANUAL, "CLEAR WS", "Option 3", "", "", 0)
+   {
+      Action( "Weather/Visual - Windshears: Clear Windshear", [
+         Weather.WindshearProfileNumber := 0;
+         wait(100);
+         Atmos.WindshearProfileIntensity := 0.0 inpercent;
+         wait(100);
+         Flight.WindshearTrigger.Takeoff_Vr := FALSE;
+         wait(100);
+         Flight.WindshearTrigger.Takeoff_Pitch := FALSE;
+         wait(100);
+         Flight.WindshearTrigger.Appr_Desc := FALSE;
+         wait(200) ] );
+   }
+
+   Task( 48, 18000, 0xc, MANUAL, "TKOF 18", "Option 3 - if required", "", "", 0)
+   {
+      Action( "Reposition: On Ground Reposition", [
+         RadioAid.RepositionAirportIcao := "EDDF";
+         wait(100);
+         RadioAid.RepositionAirportRwy := "18";
+         wait(100);
+         Aircraft.ReposOnGnd := 7;
+         wait(500);
+         if Aircraft.ReposOnGnd = 7 or Aircraft.ReposOnGnd = 8 then
+            wait(200);
+            Reset.All_Temperature_Resets := TRUE
+         endif;
+         wait(5000);
+         hang while( Maint.Environment.ReposStatus > 0 ) endhang ] );
+   }
+
+   Task( 51, 19000, 0xd, MANUAL, "*WS AFT TKOF", "Option 4", "", "", 0)
+   {
+      Action( "Weather/Visual - Windshears: Activate Windshear", [
+         liWindshearProfile := 14;
+         wait(200);
+         if liWindshearProfile < 11 then
+            Weather.WindshearProfileNumber := liWindshearProfile;
+            wait(100)
+         elsif liWindshearProfile = 11 then
+            Weather.WindshearProfileNumber := 34;
+            Flight.WindshearTrigger.Takeoff_Vr := TRUE;
+            wait(100)
+         elsif liWindshearProfile = 12 then
+            Weather.WindshearProfileNumber := 34;
+            Flight.WindshearTrigger.Takeoff_Pitch := TRUE;
+            wait(100)
+         elsif liWindshearProfile = 13 then
+            Weather.WindshearProfileNumber := 34;
+            Flight.WindshearTrigger.Appr_Desc := TRUE;
+            wait(100)
+         elsif liWindshearProfile = 14 then
+            Weather.WindshearProfileNumber := 35;
+            wait(100)
+         elsif liWindshearProfile = 15 then
+            Weather.WindshearProfileNumber := 36;
+            wait(100)
+         elsif liWindshearProfile = 16 then
+            Weather.WindshearProfileNumber := 37;
+            wait(100)
+         endif;
+         wait(1000) ] );
+   }
+
+   Task( 52.5, 19500, 0xe, MANUAL, "CLEAR WS", "", "", "", 0)
+   {
+      Action( "Weather/Visual - Windshears: Clear Windshear", [
+         Weather.WindshearProfileNumber := 0;
+         wait(100);
+         Atmos.WindshearProfileIntensity := 0.0 inpercent;
+         wait(100);
+         Flight.WindshearTrigger.Takeoff_Vr := FALSE;
+         wait(100);
+         Flight.WindshearTrigger.Takeoff_Pitch := FALSE;
+         wait(100);
+         Flight.WindshearTrigger.Appr_Desc := FALSE;
+         wait(200) ] );
+   }
+
+   Task( 54, 20000, 0xf, MANUAL, "*HYD FAIL G", "Option a\nHYD G RSVR LVL LOW > 1.000ft RA", "", "", 0)
+   {
+      VaryMalfunction( "#LHM2920(1)", "ARM", 0x0030, 0.000000 litre, 0, "AGL > 1000 ft ", "AwAAAAAAAAAAAAAAAAAAAAAAAgQAAAT+BAAI/gAFAAAAAABAj0AEZm9vdEE=" );
+   }
+
+   Task( 57, 21000, 0x10, MANUAL, "*HYD FAIL Y", "Option b\nHYD Y RSVR LVL LOW > 1.000ft RA", "", "", 0)
+   {
+      VaryMalfunction( "#LHM2921(1)", "ARM", 0x0030, 0.000000 litre, 0, "AGL > 1000 ft ", "AwAAAAAAAAAAAAAAAAAAAAAAAgQAAAT+BAAI/gAFAAAAAABAj0AEZm9vdEE=" );
+   }
+
+   Task( 60, 22000, 0x11, MANUAL, "EDDF 25 C", "", "", "", 0)
+   {
+      Action( "Reposition: Set Active Airport & Runway", [
+         RadioAid.RepositionAirportIcao := "EDDF";
+         wait(1500);
+         RadioAid.RepositionAirportRwy := "25C";
+         wait(1500) ] );
+   }
+
+   Task( 63, 23000, 0x12, MANUAL, "EDDM 08 L", "EDDM   160/20   3.500m\nOVC004  10/8   Q1008", "", "", 0)
+   {
+      Action( "Reposition: Set Active Airport & Runway", [
+         RadioAid.RepositionAirportIcao := "EDDM";
+         wait(1500);
+         RadioAid.RepositionAirportRwy := "08L";
+         wait(1500) ] );
+      Action( "Weather/Visual - Basic: Set Surface Wind Direction", [
+         Weather.WindDirAt30Ft := 160 degree;
+         wait(100);
+         if Weather.WindDirAt30Ft.MwxStatus = 1 then
+            Weather.WindDirAt30Ft.MwxStatus := 2
+         endif;
+         wait(1500) ] );
+      Action( "Weather/Visual - Basic: Set Surface Wind Speed", [
+         Weather.WindSpdAt30Ft := 20 knot;
+         wait(100);
+         if Weather.WindSpdAt30Ft.MwxStatus = 1 then
+            Weather.WindSpdAt30Ft.MwxStatus := 2
+         endif;
+         wait(1500) ] );
+      Action( "Weather/Visual - Basic: Set Visibility", [
+         Weather.Visibility := 3.5 kilometre;
+         wait(100);
+         if Weather.Visibility.MwxStatus = 1 then
+            Weather.Visibility.MwxStatus := 2
+         endif;
+         wait(400) ] );
+      Action( "Weather/Visual - Cloud: Lower Cloud Layer", [
+         Weather.LowerCloud1BottomAltitude := 400 foot;
+         wait(2000);
+         Weather.LowerCloud1TopAltitude := 5000 foot;
+         wait(1000);
+         Weather.Cloud1ScudEffectLower := FALSE;
+         wait(1000) ] );
+      Action( "Weather/Visual - Cloud: Lower Cloud Layer - Type", [
+         Weather.Cloud_Type_Lower := 0;
+         wait(700) ] );
+      Action( "Weather/Visual - Basic: Set Field Temp", [
+         Weather.FieldLevelTemp := 10 celsius;
+         wait(100);
+         hang while ( symbol_read_only(&Weather.FieldLevelTemp) ) endhang;
+         if Weather.FieldLevelTemp.MwxStatus = 1 then
+            Weather.FieldLevelTemp.MwxStatus := 2
+         endif;
+         wait(400) ] );
+      Action( "ATIS: Dew Point", [
+         Atis.DewPoint := 8 celsius;
+         wait(100) ] );
+      Action( "Weather/Visual - Basic: Set QNH", [
+         Atmos.QNH := 1008 hectopascal;
+         wait(100);
+         hang while ( symbol_read_only(&Atmos.QNH) ) endhang;
+         if Atmos.QNH.MwxStatus = 1 then
+            Atmos.QNH.MwxStatus := 2
+         endif;
+         wait(400) ] );
+   }
+
+   Task( 69, 25000, 0x13, MANUAL, "", "", "******************** EVP 2 ********************", "", 0)
+   {
+   }
+
+   Task( 72, 26000, 0x14, MANUAL, "WIND ABV", "Option 1", "", "", 0)
+   {
+      OptionNoDefault( "EDDF" )
+      {
+         Action( "Weather Scenarios - Atmospheric Layers: Set Surface Wind", [
+         MultiWeather.PreviewSurfaceWindDirection(liLPMwx_Region) := 130 degree;
+         wait(200);
+         MultiWeather.PreviewSurfaceWindSpeed(liLPMwx_Region) := 26 knot;
+         wait(200) ] );
+      }
+      Or( "EDDM" )
+      {
+         Action( "Weather Scenarios - Atmospheric Layers: Set Surface Wind", [
+         MultiWeather.PreviewSurfaceWindDirection(liLPMwx_Region) := 210 degree;
+         wait(200);
+         MultiWeather.PreviewSurfaceWindSpeed(liLPMwx_Region) := 23 knot;
+         wait(200) ] );
+      }
+   }
+
+   Task( 75, 27000, 0x15, MANUAL, "CEIL BLW", "Option 2", "", "", 0)
+   {
+      OptionNoDefault( "EDDF" )
+      {
+         Action( "Weather Scenarios - Cloud: Set Lower Cloud Type", [
+         MultiWeather.PreviewCloudLayer1Type(liLPMwx_Region) := 0;
+         wait(200) ] );
+         Action( "Weather Scenarios - Cloud: Set Lower Cloud Base", [
+         MultiWeather.PreviewCloudLayer1Base(liLPMwx_Region) := 100 foot;
+         wait(200) ] );
+      }
+      Or( "EDDM" )
+      {
+         Action( "Weather Scenarios - Cloud: Set Lower Cloud Type", [
+         MultiWeather.PreviewCloudLayer1Type(liLPMwx_Region) := 0;
+         wait(200) ] );
+         Action( "Weather Scenarios - Cloud: Set Lower Cloud Base", [
+         MultiWeather.PreviewCloudLayer1Base(liLPMwx_Region) := 100 foot;
+         wait(200) ] );
+      }
+   }
+
+   Task( 78, 28000, 0x16, MANUAL, "GND TFC", "Option 3", "Funktion nicht gefunden, bei L3 nachfragen", "", 0)
+   {
+      Action( "Airport Traffic - Control: Activate Scenario", [
+         AViTS.Load(16) := AViTS.Route_List_Ident(2);
+         AViTS.Play(16) := TRUE;
+         wait(200) ] );
+   }
+
+   Task( 81, 29000, 0x17, MANUAL, "REF EDDF 07C", "", "", "", 0)
+   {
+   }
+
+   Task( 82.5, 29500, 0x18, MANUAL, "REF EDDM 26R", "", "", "", 0)
+   {
+   }
+
+   Task( 84, 30000, 0x19, MANUAL, "WIND CALM CEIL OK", "OPTION 1 and 2", "", "", 0)
+   {
+      OptionNoDefault( "EDDF" )
+      {
+         Action( "Weather/Visual - Atmos: Set Surface Wind", [
+         Weather.WindDirAt30Ft := 0 degree;
+         if Weather.WindDirAt30Ft.MwxStatus = 1 then
+            Weather.WindDirAt30Ft.MwxStatus := 2
+         endif;
+         wait(1500);
+         Weather.WindSpdAt30Ft := 0 knot;
+         if Weather.WindSpdAt30Ft.MwxStatus = 1 then
+            Weather.WindSpdAt30Ft.MwxStatus := 2
+         endif;
+         wait(1500) ] );
+         Action( "Weather/Visual - Cloud: Lower Cloud Layer", [
+         Weather.LowerCloud1BottomAltitude := 600 foot;
+         wait(2000);
+         Weather.LowerCloud1TopAltitude := 5000 foot;
+         wait(1000);
+         Weather.Cloud1ScudEffectLower := FALSE;
+         wait(1000) ] );
+      }
+      Or( "EDDM" )
+      {
+         Action( "Weather/Visual - Atmos: Set Surface Wind", [
+         Weather.WindDirAt30Ft := 0 degree;
+         if Weather.WindDirAt30Ft.MwxStatus = 1 then
+            Weather.WindDirAt30Ft.MwxStatus := 2
+         endif;
+         wait(1500);
+         Weather.WindSpdAt30Ft := 0 knot;
+         if Weather.WindSpdAt30Ft.MwxStatus = 1 then
+            Weather.WindSpdAt30Ft.MwxStatus := 2
+         endif;
+         wait(1500) ] );
+         Action( "Weather/Visual - Cloud: Lower Cloud Layer", [
+         Weather.LowerCloud1BottomAltitude := 400 foot;
+         wait(2000);
+         Weather.LowerCloud1TopAltitude := 5000 foot;
+         wait(1000);
+         Weather.Cloud1ScudEffectLower := FALSE;
+         wait(1000) ] );
+      }
+   }
+
+   Task( 90, 32000, 0x1a, MANUAL, "CLR GND TFC", "OPTION 3", "Funktion nicht gefunden, bei L3 nachfragen", "", 0)
+   {
+   }
+
+   Task( 93, 33000, 0x1b, MANUAL, "", "Malfunction Reset\nSystem Reset", "******************** MVP 1 ********************", "", 0)
+   {
+      Action( "Reset: Major - Malfunctions Reset", [
+         reset("Mm")] );
+      Action( "Reset: Major - System Reset", [
+         Aircraft.SystemReset := not Aircraft.SystemReset;
+         wait(5000) ] );
+   }
+
+   Task( 99, 35000, 0x1c, MANUAL, "T/O LO GW - GW WX", "ZFW/ZFWCG: 180.0/30.0\nFOB: 20t\n\nEDDF   250/15   3.500m\nBKN006  12/9   Q1008", "", "", 0)
+   {
+      Action( "Initial Conditions: Aircraft Set", [
+         Aircraft.ZeroFuelWeight := 180 tonne;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.ZeroFuelWeight)) endhang;
+         wait(100);
+         Aircraft.CG_ZeroFuelWeight := 30.0 percent_mac;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.CG_ZeroFuelWeight)) endhang;
+         wait(100);
+         Fuel.TotalFuelQty_Kg := 20 tonne;
+         wait(400);
+         hang while(symbol_read_only(&Fuel.TotalFuelQty_Kg)) endhang] );
+      Action( "Weather/Visual - Basic: Set Surface Wind Direction", [
+         Weather.WindDirAt30Ft := 250 degree;
+         wait(100);
+         if Weather.WindDirAt30Ft.MwxStatus = 1 then
+            Weather.WindDirAt30Ft.MwxStatus := 2
+         endif;
+         wait(1500) ] );
+      Action( "Weather/Visual - Basic: Set Surface Wind Speed", [
+         Weather.WindSpdAt30Ft := 15 knot;
+         wait(100);
+         if Weather.WindSpdAt30Ft.MwxStatus = 1 then
+            Weather.WindSpdAt30Ft.MwxStatus := 2
+         endif;
+         wait(1500) ] );
+      Action( "Weather/Visual - Basic: Set Visibility", [
+         Weather.Visibility := 3.5 kilometre;
+         wait(100);
+         if Weather.Visibility.MwxStatus = 1 then
+            Weather.Visibility.MwxStatus := 2
+         endif;
+         wait(400) ] );
+      Action( "Weather/Visual - Cloud: Lower Cloud Layer - Type", [
+         Weather.Cloud_Type_Lower := 2;
+         wait(700) ] );
+      Action( "Weather/Visual - Cloud: Lower Cloud Layer", [
+         Weather.LowerCloud1BottomAltitude := 600 foot;
+         wait(2000);
+         Weather.LowerCloud1TopAltitude := 5000 foot;
+         wait(1000);
+         Weather.Cloud1ScudEffectLower := FALSE;
+         wait(1000) ] );
+      Action( "Weather/Visual - Basic: Set Field Temp", [
+         Weather.FieldLevelTemp := 12 celsius;
+         wait(100);
+         hang while ( symbol_read_only(&Weather.FieldLevelTemp) ) endhang;
+         if Weather.FieldLevelTemp.MwxStatus = 1 then
+            Weather.FieldLevelTemp.MwxStatus := 2
+         endif;
+         wait(400) ] );
+      Action( "ATIS: Dew Point", [
+         Atis.DewPoint := 9 celsius;
+         wait(100) ] );
+      Action( "Weather/Visual - Basic: Set QNH", [
+         Atmos.QNH := 1008 hectopascal;
+         wait(100);
+         hang while ( symbol_read_only(&Atmos.QNH) ) endhang;
+         if Atmos.QNH.MwxStatus = 1 then
+            Atmos.QNH.MwxStatus := 2
+         endif;
+         wait(400) ] );
+   }
+
+   Task( 100.5, 35500, 0x1d, MANUAL, "T/O LO GW - REPOS", "PERF: 141/141/146 FLX67 CONF1+F\n\nTOCG 30.4 StopMargin >1000 EOACC\n2100 FRAX5", "", "", 0)
+   {
+      Action( "Reposition: On Ground Reposition", [
+         RadioAid.RepositionAirportIcao := "EDDF";
+         wait(100);
+         RadioAid.RepositionAirportRwy := "25C";
+         wait(100);
+         Aircraft.ReposOnGnd := 7;
+         wait(500);
+         if Aircraft.ReposOnGnd = 7 or Aircraft.ReposOnGnd = 8 then
+            wait(200);
+            Reset.All_Temperature_Resets := TRUE
+         endif;
+         wait(5000);
+         hang while( Maint.Environment.ReposStatus > 0 ) endhang ] );
+   }
+
+   Task( 102, 36000, 0x1e, MANUAL, "CAVOK", "", "", "", 0)
+   {
+      Action( "Weather/Visual - CAVOK: Set CAVOK", [
+         Visual.PresetCategory := 1;
+         wait(500) ] );
+   }
+
+   Task( 103.5, 36500, 0x1f, MANUAL, "NON-PREC", "", "", "", 0)
+   {
+      Action( "Weather/Visual - Visual/Runway Conditions: Set Visual Category", [
+         Visual.PresetCategory := 9;
+         wait(4000) ] );
+   }
+
+   Task( 105, 37000, 0x20, MANUAL, "RVR 200", "", "", "", 0)
+   {
+      Action( "Weather/Visual - Visual/Runway Conditions: Set Visual Category", [
+         Visual.PresetCategory := 5;
+         wait(4000) ] );
+      Action( "Weather/Visual - Visual/Runway Conditions: Set RVR", [
+         Weather.RVR := 200 metre;
+         wait(400) ] );
+   }
+
+   Task( 108, 38000, 0x21, MANUAL, "REPOS 13NM 25C", "", "sind 12nm", "", 0)
+   {
+      Action( "Reposition: In Air Reposition", [
+         RadioAid.RepositionAirportIcao := "EDDF";
+         wait(100);
+         RadioAid.RepositionAirportRwy := "25C";
+         wait(100);
+         Aircraft.ReposInAir := 1;
+         wait(5000);
+         hang while( Maint.Environment.ReposStatus > 0 ) endhang ] );
+   }
+
+   Task( 111, 39000, 0x22, MANUAL, "NON-PREC", "", "", "", 0)
+   {
+      Action( "Weather/Visual - Visual/Runway Conditions: Set Visual Category", [
+         Visual.PresetCategory := 9;
+         wait(4000) ] );
+   }
+
+   Task( 114, 40000, 0x23, MANUAL, "T/O HI GW", "ZFW/ZFWCG: 180.0/30.0\nFOB: 70t\n\nREPOS EDDF TKOF 25C", "", "", 0)
+   {
+      Action( "Reposition: On Ground Reposition", [
+         RadioAid.RepositionAirportIcao := "EDDF";
+         wait(100);
+         RadioAid.RepositionAirportRwy := "25C";
+         wait(100);
+         Aircraft.ReposOnGnd := 7;
+         wait(500);
+         if Aircraft.ReposOnGnd = 7 or Aircraft.ReposOnGnd = 8 then
+            wait(200);
+            Reset.All_Temperature_Resets := TRUE
+         endif;
+         wait(5000);
+         hang while( Maint.Environment.ReposStatus > 0 ) endhang ] );
+      Action( "Initial Conditions: Aircraft Set", [
+         Aircraft.ZeroFuelWeight := 180 tonne;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.ZeroFuelWeight)) endhang;
+         wait(100);
+         Aircraft.CG_ZeroFuelWeight := 30.0 percent_mac;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.CG_ZeroFuelWeight)) endhang;
+         wait(100);
+         Fuel.TotalFuelQty_Kg := 70 tonne;
+         wait(400);
+         hang while(symbol_read_only(&Fuel.TotalFuelQty_Kg)) endhang] );
+   }
+
+   Task( 117, 41000, 0x24, MANUAL, "*T/O WS", "", "", "", 0)
+   {
+      Action( "Weather/Visual - Windshears: Activate Windshear", [
+         liWindshearProfile := 15;
+         wait(200);
+         if liWindshearProfile < 11 then
+            Weather.WindshearProfileNumber := liWindshearProfile;
+            wait(100)
+         elsif liWindshearProfile = 11 then
+            Weather.WindshearProfileNumber := 34;
+            Flight.WindshearTrigger.Takeoff_Vr := TRUE;
+            wait(100)
+         elsif liWindshearProfile = 12 then
+            Weather.WindshearProfileNumber := 34;
+            Flight.WindshearTrigger.Takeoff_Pitch := TRUE;
+            wait(100)
+         elsif liWindshearProfile = 13 then
+            Weather.WindshearProfileNumber := 34;
+            Flight.WindshearTrigger.Appr_Desc := TRUE;
+            wait(100)
+         elsif liWindshearProfile = 14 then
+            Weather.WindshearProfileNumber := 35;
+            wait(100)
+         elsif liWindshearProfile = 15 then
+            Weather.WindshearProfileNumber := 36;
+            wait(100)
+         elsif liWindshearProfile = 16 then
+            Weather.WindshearProfileNumber := 37;
+            wait(100)
+         endif;
+         wait(1000) ] );
+   }
+
+   Task( 120, 42250, 0x25, MANUAL, "FLT FREEZE", "", "", "", 0)
+   {
+      Action( "Simulator Freezes: Flight Freeze", [
+         Aircraft.FlightFreeze := TRUE] );
+   }
+
+   Task( 123, 43500, 0x26, MANUAL, "CAT I", "", "", "", 0)
+   {
+      Action( "Weather/Visual - Visual/Runway Conditions: Set Visual Category", [
+         Visual.PresetCategory := 3;
+         wait(4000) ] );
+   }
+
+   Task( 126, 44750, 0x27, MANUAL, "T/O HI GW", "ZFW/ZFWCG: 180.0/30.0\nFOB: 70t\n\nREPOS EDDF TKOF 25C", "", "", 0)
+   {
+      Action( "Reposition: On Ground Reposition", [
+         RadioAid.RepositionAirportIcao := "EDDF";
+         wait(100);
+         RadioAid.RepositionAirportRwy := "25C";
+         wait(100);
+         Aircraft.ReposOnGnd := 7;
+         wait(500);
+         if Aircraft.ReposOnGnd = 7 or Aircraft.ReposOnGnd = 8 then
+            wait(200);
+            Reset.All_Temperature_Resets := TRUE
+         endif;
+         wait(5000);
+         hang while( Maint.Environment.ReposStatus > 0 ) endhang ] );
+      Action( "Initial Conditions: Aircraft Set", [
+         Aircraft.ZeroFuelWeight := 180 tonne;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.ZeroFuelWeight)) endhang;
+         wait(100);
+         Aircraft.CG_ZeroFuelWeight := 30.0 percent_mac;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.CG_ZeroFuelWeight)) endhang;
+         wait(100);
+         Fuel.TotalFuelQty_Kg := 70 tonne;
+         wait(400);
+         hang while(symbol_read_only(&Fuel.TotalFuelQty_Kg)) endhang] );
+   }
+
+   Task( 126.367, 45375, 0x28, MANUAL, "*ENG 1 MALF", "Option a\nArms brief stall followed by failure", "", "", 0)
+   {
+      Malfunction( "#LEM0006(1)", "ARM", 0x0030, 0.000000 NULL, 0, "V1 ", "AQAAAAAAAAAAAAAAAAAAAAAAAQIAAFY=" );
+   }
+
+   Task( 126.55, 45687.5, 0x29, MANUAL, "*ENG 2 MALF", "Option b\nArms engine damage @ V1", "", "", 0)
+   {
+      Malfunction( "#LEM0003(2)", "ARM", 0x0030, 0.000000 NULL, 0, "V1 ", "AQAAAAAAAAAAAAAAAAAAAAAAAQIAAFY=" );
+   }
+
+   Task( 126.617, 45843.8, 0x2a, MANUAL, "FLT FREEZE", "", "", "", 0)
+   {
+      Action( "Simulator Freezes: Flight Freeze", [
+         Aircraft.FlightFreeze := TRUE] );
+   }
+
+   Task( 126.7, 45921.9, 0x2b, MANUAL, "NON-PREC", "", "", "", 0)
+   {
+      Action( "Weather/Visual - Visual/Runway Conditions: Set Visual Category", [
+         Visual.PresetCategory := 9;
+         wait(4000) ] );
+   }
+
+   Task( 126.75, 46000, 0x2c, MANUAL, "REPOS 6NM 25C", "ZFW/ZFWCG: 180.0/30.0\nFOB: 20t", "7nm, da 6nm nicht anwaehlbar", "", 0)
+   {
+      Action( "Reposition: In Air Reposition", [
+         RadioAid.RepositionAirportIcao := "EDDF";
+         wait(100);
+         RadioAid.RepositionAirportRwy := "25C";
+         wait(100);
+         Aircraft.ReposInAir := 2;
+         wait(5000);
+         hang while( Maint.Environment.ReposStatus > 0 ) endhang ] );
+   }
+
+   Task( 127.5, 47250, 0x2d, MANUAL, "CLR MALF", "", "", "", 0)
+   {
+      Action( "Reset: Major - Malfunctions Reset", [
+         reset("Mm")] );
+      Action( "Reset: Systems - ATA 71 Engines", [
+         LEXENGS2RST := TRUE;
+         wait(5000) ] );
+   }
+
+   Task( 128.25, 48500, 0x2e, MANUAL, "ENG Q-START", "", "", "", 0)
+   {
+      Action( "Aircraft Services: Engine Start", [
+         Eng.Quickstart := TRUE] );
+   }
+
+   Task( 129, 49750, 0x2f, MANUAL, "*ENG 1 ON FINAL", "Option 1\nENG 1 FAIL (DAMAGE) AGL < 900ft RA", "", "", 0)
+   {
+      Malfunction( "#LEM0003(1)", "ARM", 0x0030, 0.000000 NULL, 0, "AGL @ 900 ft ", "AwAAAAAAAAAAAAAAAAAAAAAAAgQAAAT+BwAI/gAFAAAAAAAgjEAEZm9vdEE=" );
+   }
+
+   Task( 129.75, 51000, 0x30, MANUAL, "*ENG 2 ON FINAL", "Option 2\nENG 2 FAIL (NO DAMAGE) AGL < 900ft RA", "", "", 0)
+   {
+      Malfunction( "#LEM0002(2)", "ARM", 0x0030, 0.000000 NULL, 0, "AGL @ 900 ft ", "AwAAAAAAAAAAAAAAAAAAAAAAAgQAAAT+BwAI/gAFAAAAAAAgjEAEZm9vdEE=" );
+   }
+
+   Task( 130.5, 52500, 0x31, MANUAL, "3NM FINAL", "ZFW/ZFWCG: 180.0/30.0\nFOB: 20t", "", "", 0)
+   {
+      Action( "Reposition: In Air Reposition", [
+         RadioAid.RepositionAirportIcao := "EDDF";
+         wait(100);
+         RadioAid.RepositionAirportRwy := "25C";
+         wait(100);
+         Aircraft.ReposInAir := 3;
+         wait(5000);
+         hang while( Maint.Environment.ReposStatus > 0 ) endhang ] );
+      Action( "Initial Conditions: Aircraft Set", [
+         Aircraft.ZeroFuelWeight := 180 tonne;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.ZeroFuelWeight)) endhang;
+         wait(100);
+         Aircraft.CG_ZeroFuelWeight := 30.0 percent_mac;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.CG_ZeroFuelWeight)) endhang;
+         wait(100);
+         Fuel.TotalFuelQty_Kg := 20 tonne;
+         wait(400);
+         hang while(symbol_read_only(&Fuel.TotalFuelQty_Kg)) endhang] );
+   }
+
+   Task( 131.25, 54000, 0x32, MANUAL, "MVP 1", "jumps to begin of MVP 1", "", "", 0)
+   {
+      Goto( 27, "MVP 1" );
+   }
+
+   Task( 132, 55500, 0x33, MANUAL, "", "Malfunction Reset\nEngine Start", "******************** MVP 2 ********************", "", 0)
+   {
+      Action( "Reset: Major - Malfunctions Reset", [
+         reset("Mm")] );
+      Action( "Reset: Systems - ATA 71 Engines", [
+         LEXENGS2RST := TRUE;
+         wait(5000) ] );
+      Action( "Aircraft Services: Engine Start", [
+         Eng.Quickstart := TRUE] );
+   }
+
+   Task( 132.75, 57000, 0x34, MANUAL, "T/O HI GW", "ZFW/ZFWCG: 180.0/30.0\nFOB: 20t\n\nREPOS TKOF EDDF 25C\n\nEDDF calm RVR 75-200m 12/9 Q1008", "", "", 0)
+   {
+      Action( "Reposition: On Ground Reposition", [
+         RadioAid.RepositionAirportIcao := "EDDF";
+         wait(100);
+         RadioAid.RepositionAirportRwy := "25C";
+         wait(100);
+         Aircraft.ReposOnGnd := 7;
+         wait(500);
+         if Aircraft.ReposOnGnd = 7 or Aircraft.ReposOnGnd = 8 then
+            wait(200);
+            Reset.All_Temperature_Resets := TRUE
+         endif;
+         wait(5000);
+         hang while( Maint.Environment.ReposStatus > 0 ) endhang ] );
+      Action( "Initial Conditions: Aircraft Set", [
+         Aircraft.ZeroFuelWeight := 180 tonne;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.ZeroFuelWeight)) endhang;
+         wait(100);
+         Aircraft.CG_ZeroFuelWeight := 30.0 percent_mac;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.CG_ZeroFuelWeight)) endhang;
+         wait(100);
+         Fuel.TotalFuelQty_Kg := 70 tonne;
+         wait(400);
+         hang while(symbol_read_only(&Fuel.TotalFuelQty_Kg)) endhang] );
+      Action( "Weather/Visual - Basic: Set Preset Wind", [
+         Atmos.Wind_Preset := 0;
+         wait(4000) ] );
+   }
+
+   Task( 133.5, 58500, 0x35, MANUAL, "RVR 125", "", "", "", 0)
+   {
+      Action( "Weather/Visual - Visual/Runway Conditions: Set Visual Category", [
+         Visual.PresetCategory := 11;
+         wait(4000) ] );
+      Action( "Weather/Visual - Visual/Runway Conditions: Set RVR", [
+         Weather.RVR := 125 metre;
+         wait(400) ] );
+   }
+
+   Task( 134.25, 60000, 0x36, MANUAL, "REPOS 5NM 25C", "ZFW/ZFWCG: 180.0/30.0\nFOB: 20t", "erstmal 7nm verwenden", "", 0)
+   {
+      Action( "Reposition: In Air Reposition", [
+         RadioAid.RepositionAirportIcao := "EDDF";
+         wait(100);
+         RadioAid.RepositionAirportRwy := "25C";
+         wait(100);
+         Aircraft.ReposInAir := 3;
+         wait(5000);
+         hang while( Maint.Environment.ReposStatus > 0 ) endhang ] );
+      Action( "Initial Conditions: Aircraft Set", [
+         Aircraft.ZeroFuelWeight := 180 tonne;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.ZeroFuelWeight)) endhang;
+         wait(100);
+         Aircraft.CG_ZeroFuelWeight := 30.0 percent_mac;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.CG_ZeroFuelWeight)) endhang;
+         wait(100);
+         Fuel.TotalFuelQty_Kg := 20 tonne;
+         wait(400);
+         hang while(symbol_read_only(&Fuel.TotalFuelQty_Kg)) endhang] );
+   }
+
+   Task( 135, 61500, 0x37, MANUAL, "RVR 75", "", "", "", 0)
+   {
+      Action( "Weather/Visual - Visual/Runway Conditions: Set Visual Category", [
+         Visual.PresetCategory := 7;
+         wait(4000) ] );
+      Action( "Weather/Visual - Visual/Runway Conditions: Set RVR", [
+         Weather.RVR := 75 metre;
+         wait(400) ] );
+   }
+
+   Task( 135.75, 63250, 0x38, MANUAL, "*AFS MALF", "AUTO FLT A/THR OFF AGL < 200ft", "", "", 0)
+   {
+      Malfunction( "#LQMATOFF(1)", "ARM", 0x0030, 0.000000 NULL, 0, "AGL < 200 ft ", "AwAAAAAAAAAAAAAAAAAAAAAAAgQAAAT+AwAI/gAFAAAAAAAAaUAEZm9vdEE=" );
+   }
+
+   Task( 136.5, 65000, 0x39, MANUAL, "REPOS 4NM", "", "erstmal 3nm verwenden", "", 0)
+   {
+      Action( "Reposition: In Air Reposition", [
+         RadioAid.RepositionAirportIcao := "EDDF";
+         wait(100);
+         RadioAid.RepositionAirportRwy := "25C";
+         wait(100);
+         Aircraft.ReposInAir := 3;
+         wait(5000);
+         hang while( Maint.Environment.ReposStatus > 0 ) endhang ] );
+   }
+
+   Task( 137.25, 66750, 0x3a, MANUAL, "CLEAR MALF", "", "", "", 0)
+   {
+      Action( "Reset: Major - Malfunctions Reset", [
+         reset("Mm")] );
+   }
+
+   Task( 138, 68500, 0x3b, MANUAL, "T/O HI GW", "ZFW/ZFWCG: 180.0/30.0\nFOB: 20t", "", "", 0)
+   {
+      Action( "Initial Conditions: Aircraft Set", [
+         Aircraft.ZeroFuelWeight := 180 tonne;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.ZeroFuelWeight)) endhang;
+         wait(100);
+         Aircraft.CG_ZeroFuelWeight := 30.0 percent_mac;
+         wait( 400 );
+         hang while(symbol_read_only(&Aircraft.CG_ZeroFuelWeight)) endhang;
+         wait(100);
+         Fuel.TotalFuelQty_Kg := 70 tonne;
+         wait(400);
+         hang while(symbol_read_only(&Fuel.TotalFuelQty_Kg)) endhang] );
+      Action( "Reposition: On Ground Reposition", [
+         RadioAid.RepositionAirportIcao := "EDDF";
+         wait(100);
+         RadioAid.RepositionAirportRwy := "25C";
+         wait(100);
+         Aircraft.ReposOnGnd := 7;
+         wait(500);
+         if Aircraft.ReposOnGnd = 7 or Aircraft.ReposOnGnd = 8 then
+            wait(200);
+            Reset.All_Temperature_Resets := TRUE
+         endif;
+         wait(5000);
+         hang while( Maint.Environment.ReposStatus > 0 ) endhang ] );
+   }
+
+   Task( 138.75, 70250, 0x3c, MANUAL, "RVR 125", "", "", "", 0)
+   {
+      Action( "Weather/Visual - Visual/Runway Conditions: Set Visual Category", [
+         Visual.PresetCategory := 11;
+         wait(4000) ] );
+      Action( "Weather/Visual - Visual/Runway Conditions: Set RVR", [
+         Weather.RVR := 125 metre;
+         wait(400) ] );
+   }
+
+   Task( 139.5, 72250, 0x3d, MANUAL, "*LVO RTO", "ENG 1 FAIL (DAMAGE) SPD > 120kt", "", "", 0)
+   {
+      Malfunction( "#LEM0003(1)", "ARM", 0x0030, 0.000000 NULL, 0, "SPD > 120 kt ", "AwAAAAAAAAAAAAAAAAAAAAAAAgEAAAT+BAAI/gAFAAAAAAAAXkAEa25vdFM=" );
+   }
+
+   Task( 139.867, 73250, 0x3e, MANUAL, "FIRE BRIG", "", "", "", 0)
+   {
+      Action( "Weather/Visual - Visual/Runway Conditions: Fire Trucks", [
+         Visual.FireTrucks := TRUE;
+         wait(400) ] );
+   }
+
+   Task( 140.25, 74250, 0x3f, MANUAL, "LESSON END", "Repos EDDM 26R Gate\nExternal Power ON\nMaster Reset", "", "", 0)
+   {
+      Action( "Lesson Control: Stop", [
+         lesson_control("STOP") ] );
+      Action( "Reposition: On Ground Reposition", [
+         RadioAid.RepositionAirportIcao := "EDDM";
+         wait(100);
+         RadioAid.RepositionAirportRwy := "26R";
+         wait(100);
+         Aircraft.ReposOnGnd := 1;
+         wait(500);
+         if Aircraft.ReposOnGnd = 7 or Aircraft.ReposOnGnd = 8 then
+            wait(200);
+            Reset.All_Temperature_Resets := TRUE
+         endif;
+         wait(5000);
+         hang while( Maint.Environment.ReposStatus > 0 ) endhang ] );
+      Action( "Aircraft Services: External Power 1", [
+        Elec.ExtPwrConnect.1 := TRUE] );
+      Action( "Aircraft Services: External Power 2", [
+        Elec.ExtPwrConnect.2 := TRUE] );
+      Action( "Reset: Major - Master Reset", [
+         Reset.Master_Reset := TRUE;
+         reset("MmF");
+         wait(6000) ] );
+   }
+}

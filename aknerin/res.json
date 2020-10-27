@@ -1,0 +1,388 @@
+{
+    "EBT 4 - Day 1.txt": [
+        {
+            "name": " 0.00",
+            "type1": " 0 ",
+            "type2": "",
+            "type3": ""
+        },
+        {
+            "name": " Sim. Reset",
+            "type1": " Visual OnSystem ResetMalfunction ResetEnvironment ResetWeather Scenario Reset",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " ",
+            "type1": " ",
+            "type2": " ******************** EVP 1 ********************",
+            "type3": " "
+        },
+        {
+            "name": " HOLD 18  - GW WX",
+            "type1": " ZFW/ZFWCG: 180.0/30.0FOB: 18tEDDF   250/15   3.500m VCTS  BKN006CB   12/9   Q1008TEMPO TSRA ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " HOLD 18 - REPOS",
+            "type1": " PERF: 140/140/145 FLX64 CONF1+FTOCG 30.4 StopMargin >900 EOACC1900 FRAX3",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " APU Q-START",
+            "type1": " all doors close sequence",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " ENG Q-START",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " EXT ELEC OFF",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " *PRED WS",
+            "type1": " Option 1",
+            "type2": " ohne Funktion",
+            "type3": " L3 muss checken"
+        },
+        {
+            "name": " CLEAR PWS",
+            "type1": " Option 1",
+            "type2": " ohne Funktion",
+            "type3": " L3 muss checken"
+        },
+        {
+            "name": " *WS ON RWY",
+            "type1": " Option 3",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " CLEAR WS",
+            "type1": " Option 3",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " TKOF 18",
+            "type1": " Option 3 - if required",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " *WS AFT TKOF",
+            "type1": " Option 4",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " CLEAR WS",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " *HYD FAIL G",
+            "type1": " Option aHYD G RSVR LVL LOW > 1.000ft RA",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " *HYD FAIL Y",
+            "type1": " Option bHYD Y RSVR LVL LOW > 1.000ft RA",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " EDDF 25 C",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " EDDM 08 L",
+            "type1": " EDDM   160/20   3.500mOVC004  10/8   Q1008",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " ",
+            "type1": " ",
+            "type2": " ******************** EVP 2 ********************",
+            "type3": " "
+        },
+        {
+            "name": " WIND ABV",
+            "type1": " Option 1",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " CEIL BLW",
+            "type1": " Option 2",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " GND TFC",
+            "type1": " Option 3",
+            "type2": " Funktion nicht gefunden",
+            "type3": " bei L3 nachfragen"
+        },
+        {
+            "name": " REF EDDF 07C",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " REF EDDM 26R",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " WIND CALM CEIL OK",
+            "type1": " OPTION 1 and 2",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " CLR GND TFC",
+            "type1": " OPTION 3",
+            "type2": " Funktion nicht gefunden",
+            "type3": " bei L3 nachfragen"
+        },
+        {
+            "name": " ",
+            "type1": " Malfunction ResetSystem Reset",
+            "type2": " ******************** MVP 1 ********************",
+            "type3": " "
+        },
+        {
+            "name": " T/O LO GW - GW WX",
+            "type1": " ZFW/ZFWCG: 180.0/30.0FOB: 20tEDDF   250/15   3.500mBKN006  12/9   Q1008",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " T/O LO GW - REPOS",
+            "type1": " PERF: 141/141/146 FLX67 CONF1+FTOCG 30.4 StopMargin >1000 EOACC2100 FRAX5",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " CAVOK",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " NON-PREC",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " RVR 200",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " REPOS 13NM 25C",
+            "type1": " ",
+            "type2": " sind 12nm",
+            "type3": " "
+        },
+        {
+            "name": " NON-PREC",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " T/O HI GW",
+            "type1": " ZFW/ZFWCG: 180.0/30.0FOB: 70tREPOS EDDF TKOF 25C",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " *T/O WS",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " FLT FREEZE",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " CAT I",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " T/O HI GW",
+            "type1": " ZFW/ZFWCG: 180.0/30.0FOB: 70tREPOS EDDF TKOF 25C",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " *ENG 1 MALF",
+            "type1": " Option aArms brief stall followed by failure",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " *ENG 2 MALF",
+            "type1": " Option bArms engine damage @ V1",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " FLT FREEZE",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " NON-PREC",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " REPOS 6NM 25C",
+            "type1": " ZFW/ZFWCG: 180.0/30.0FOB: 20t",
+            "type2": " 7nm",
+            "type3": " da 6nm nicht anwaehlbar"
+        },
+        {
+            "name": " CLR MALF",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " ENG Q-START",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " *ENG 1 ON FINAL",
+            "type1": " Option 1ENG 1 FAIL ",
+            "type2": "",
+            "type3": ""
+        },
+        {
+            "name": " *ENG 2 ON FINAL",
+            "type1": " Option 2ENG 2 FAIL ",
+            "type2": "",
+            "type3": ""
+        },
+        {
+            "name": " 3NM FINAL",
+            "type1": " ZFW/ZFWCG: 180.0/30.0FOB: 20t",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " MVP 1",
+            "type1": " jumps to begin of MVP 1",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " ",
+            "type1": " Malfunction ResetEngine Start",
+            "type2": " ******************** MVP 2 ********************",
+            "type3": " "
+        },
+        {
+            "name": " T/O HI GW",
+            "type1": " ZFW/ZFWCG: 180.0/30.0FOB: 20tREPOS TKOF EDDF 25CEDDF calm RVR 75-200m 12/9 Q1008",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " RVR 125",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " REPOS 5NM 25C",
+            "type1": " ZFW/ZFWCG: 180.0/30.0FOB: 20t",
+            "type2": " erstmal 7nm verwenden",
+            "type3": " "
+        },
+        {
+            "name": " RVR 75",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " *AFS MALF",
+            "type1": " AUTO FLT A/THR OFF AGL < 200ft",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " REPOS 4NM",
+            "type1": " ",
+            "type2": " erstmal 3nm verwenden",
+            "type3": " "
+        },
+        {
+            "name": " CLEAR MALF",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " T/O HI GW",
+            "type1": " ZFW/ZFWCG: 180.0/30.0FOB: 20t",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " RVR 125",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " *LVO RTO",
+            "type1": " ENG 1 FAIL ",
+            "type2": "",
+            "type3": ""
+        },
+        {
+            "name": " FIRE BRIG",
+            "type1": " ",
+            "type2": " ",
+            "type3": " "
+        },
+        {
+            "name": " LESSON END",
+            "type1": " Repos EDDM 26R GateExternal Power ONMaster Reset",
+            "type2": " ",
+            "type3": " "
+        }
+    ]
+}

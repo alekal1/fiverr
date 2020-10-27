@@ -1,0 +1,77 @@
+{
+    "properties": [{
+            "Name": "alpha",
+            "Type": "float",
+            "Value": "3.47"
+        },
+        {
+            "Description": "animals",
+            "Name": "balloons",
+            "Type": "integer",
+            "Value": "569393"
+        },
+        {
+            "Description": "fish",
+            "Metric": "False",
+            "Name": "plankton",
+            "Type": "integer",
+            "Value": "582914"
+        }
+    ],
+    "Calls": [{
+            "properties": [{
+                    "Description": "car",
+                    "Metric": "False",
+                    "Name": "Ford",
+                    "Type": "float",
+                    "Value": "7.32"
+                },
+                {
+                    "Description": "tools",
+                    "Metric": "False",
+                    "Name": "hammer",
+                    "Type": "string",
+                    "Value": "N/A"
+                },
+                {
+                    "Description": "sports",
+                    "Metric": "False",
+                    "Name": "basketball",
+                    "Type": "float",
+                    "Value": "3.14"
+                },
+                {
+                    "Description": "hobby",
+                    "Metric": "False",
+                    "Name": "movies",
+                    "Type": "float",
+                    "Value": "0.007"
+                }
+            ]
+        },
+        {
+            "properties": [{
+                    "Description": "buildings",
+                    "Metric": "False",
+                    "Name": "house",
+                    "Type": "float",
+                    "Value": "634.543"
+                },
+                {
+                    "Description": "food",
+                    "Metric": "False",
+                    "Name": "pizza",
+                    "Type": "float",
+                    "Value": "6.343"
+                },
+                {
+                    "Description": "dessert",
+                    "Metric": "False",
+                    "Name": "ice cream",
+                    "Type": "float",
+                    "Value": "6.000"
+                }
+            ]
+        }
+    ]
+}

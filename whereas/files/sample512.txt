@@ -1,0 +1,47 @@
+file_dir: _data_dir/keys.txt
+num_keys: 5000000
+key_length: 512
+using keys of length: 512
+BEGIN: Benchmark: Insert Keys
+hw_cpu_instructions : 29542830665
+hw_cpu_cycles : 26291815293
+hw_cache_misses : 644577562
+hw_cache_references : 808159386
+items: 5000000
+latency(ms): 7092
+BEGIN: Benchmark: waiting for rehashing
+.......
+hw_cpu_instructions : 2303971317
+hw_cpu_cycles : 2510588594
+hw_cache_misses : 69653918
+hw_cache_references : 79044208
+items: 5000000
+latency(ms): 607
+BEGIN: Benchmark: Linear access of existing elements
+hw_cpu_instructions : 7998508809
+hw_cpu_cycles : 7719574703
+hw_cache_misses : 265575053
+hw_cache_references : 335208036
+items: 5000000
+latency(ms): 1868
+BEGIN: Benchmark: Linear access of existing elements (2nd round)
+hw_cpu_instructions : 7998508811
+hw_cpu_cycles : 7715534248
+hw_cache_misses : 265750132
+hw_cache_references : 335306648
+items: 5000000
+latency(ms): 1866
+BEGIN: Benchmark: Accessing missing
+hw_cpu_instructions : 7316758266
+hw_cpu_cycles : 7392158213
+hw_cache_misses : 221873847
+hw_cache_references : 255705775
+items: 5000000
+latency(ms): 1789
+BEGIN: Benchmark: Begin removing and adding
+hw_cpu_instructions : 19143279022
+hw_cpu_cycles : 16293124743
+hw_cache_misses : 388507105
+hw_cache_references : 527127412
+items: 5000000
+latency(ms): 3984
