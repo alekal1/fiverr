@@ -1,0 +1,122 @@
+{
+    "Location": {
+    "City": "b",
+    "state": "d",
+    "Item name":"low rise",
+    "RENTABLE SQUARE FEET":0,
+    "BUILDINGS":5364,
+    "APARTMENTS":0,
+    "Income":
+    {
+      "item":
+      {
+        "item name":"rents-Apartments",
+        "buildings":0,
+        "----% OF GPI----":
+        {
+          "low":0,
+          "med":0,
+          "high":0
+        },
+       "----$/SQ.FT.----":
+       {
+          "low":0,
+          "med":0,
+          "high":0
+        },
+       
+       "$/UNIT":
+{
+          "low":0,
+          "med":0,
+          "high":0
+        }
+        
+      },
+       "item":
+      {
+        "item name":"RENTS-GARAGE/PARKING",
+        "buildings":0,
+        "----% OF GPI----":
+        {
+          "low":0,
+          "med":0,
+          "high":0
+        },
+       "----$/SQ.FT.----":
+       {
+          "low":0,
+          "med":0,
+          "high":0
+        },
+       
+       "$/UNIT":
+{
+          "low":0,
+          "med":0,
+          "high":0
+        }
+        
+      }
+      
+    },
+    "other income":
+    {
+        "item":
+      {
+        "item name" : "GROSS POSSIBLE INCOME",
+        "buildings":0,
+        "----% OF GPI----":
+        {
+          "low":0,
+          "med":0,
+          "high":0
+        },
+       "----$/SQ.FT.----":
+       {
+          "low":0,
+          "med":0,
+          "high":0
+        },
+       
+       "$/UNIT":
+{
+          "low":0,
+          "med":0,
+          "high":0
+        } 
+        
+      },
+       "item":
+      {
+        "item name" : "TOTAL COLLECTIONS",
+        "buildings":0,
+        "----% OF GPI----":
+        {
+          "low":0,
+          "med":0,
+          "high":0
+        },
+       "----$/SQ.FT.----":
+       {
+          "low":0,
+          "med":0,
+          "high":0
+        },
+       
+       "$/UNIT":
+{
+          "low":0,
+          "med":0,
+          "high":0
+        }
+        
+      }
+      
+      
+    },
+    "expenses":{},
+    "etc.etc":{}
+  }
+   
+}

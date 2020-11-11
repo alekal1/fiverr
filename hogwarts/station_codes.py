@@ -18,7 +18,6 @@ HEADERS = {
 
 DATA = {}  # dict to store all parsed data
 
-
 def get_html(url, params=None):
     """
     Function to get html request.
